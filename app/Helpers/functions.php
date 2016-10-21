@@ -39,7 +39,7 @@ if (!function_exists('get_value_to_array')) {
         $data = [];
         foreach($args as $key => $domain) {
             array_push($data,[
-                'url' => str_replace("\r","",$domain),
+                'domain' => str_replace("\r","",$domain),
                 'type' => $type
             ]);
             unset($args[$key]);
