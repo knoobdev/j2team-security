@@ -42,9 +42,53 @@
 </head>
 <body>
     <div class="container">
-        
+        <?php if (isset($wordlists)) : ?>
+        <form class="" action="/j2team-security-app/save" method="post">
+              <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <?php foreach ($wordlists as $key => $wordlist) :?>
+                <li role="presentation" <?php echo (0===$key) ? 'class="active"' : ''?>><a href="#<?php echo $wordlist['NAME'];?>" aria-controls="<?php echo $wordlist['NAME'];?>" role="tab" data-toggle="tab"><?php echo $wordlist['NAME'];?></a></li>
+                <?php endforeach;?>
+            </ul>
+            <div class="tab-content">
+                <?php foreach ($wordlists as $key => $wordlist) :?>
+                    <div role="tabpanel" class="tab-pane <?php echo (0===$key) ? 'active"' : ''?>" id="<?php echo $wordlist['NAME'];?>">
+                        <div class="form-group">
+                           <label for="J2TeaM[<?php echo $wordlist['NAME'];?>]">List of <?php echo $wordlist['NAME'];?></label>
+                           <textarea id="J2TeaM_<?php echo $wordlist['NAME'];?>" name="J2TeaM[<?php echo $wordlist['NAME'];?>]" class="form-control" rows="8" cols="40">
+                                <?php foreach ($wordlist['VALUE'] as $domain) :?>
+                                    <?php echo $domain."\n";?>
+                                <?php endforeach;?>
+                           </textarea>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-secondary">Updated</button>
+            </div>
+        </form>
+        <?php endif;?>
     </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    function clean_txt(id) {
+        var lines = $("textarea#"+id).val().split(/\n/);
+        var texts = [];
+        for (var i=0; i < lines.length; i++) {
+            if (/\S/.test(lines[i])) {
+                texts.push($.trim(lines[i]));
+            }
+        }
+        var n = texts.toString().split(",").join("\n");
+        $("textarea#"+id).val(n);
+    };
+    $("textarea").each(function(){
+        clean_txt(this.id);
+    });
+})
+</script>
 </body>
 </html>

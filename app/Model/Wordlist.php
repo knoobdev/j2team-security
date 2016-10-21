@@ -23,4 +23,9 @@ class Wordlist extends Model {
         }
         return $data;
     }
+
+    public function update($name,$value) {
+        $result = $this->_get_db()->query("UPDATE wordlists SET value = '".$value."' WHERE name = '".$name."'");
+        return ($result);
+    }
 }

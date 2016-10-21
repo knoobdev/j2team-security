@@ -4,19 +4,21 @@ use J2TeaM\Model\Wordlist;
 
 $app->get('/', function ($request, $response, $args) {
     $wordlist = new Wordlist;
-    $a = $wordlist->get_all();
-    return view('home');
+    $wordlist = $wordlist->get_all();
+    return view('home',['wordlists' => $wordlist]);
 })->setName('home');
 
-$app->get('/api/{name}', function ($request, $response, $args) use ($app) {
-    $name = isset($args['name']) ? $args['name'] : NULL;
-    if (NULL===$name) return redirect('home');
-    $listType = ['autolike','malware','phishing','scam','other'];
-    if (!in_array($name,$listType)) return response_json(['status' => false]);
+
+$app->post('/save', function ($request, $response, $args) use($app) {
+    $input = $request->getParams();
+    if (!isset($input)) return FALSE;
+    $input = isset($input['J2TeaM']) ? $input['J2TeaM'] : NULL;
+    if (NULL==$input) return FALSE;
     $wordlist = new Wordlist;
-    return view('home');
-});
-
-$app->post('/save', function ($request, $response, $args) {
-
+    foreach ($input as $name => $value) {
+        $domain[$name] = explode("\n",$value);
+        $domain[$name] = serialize($domain[$name]);
+        $wordlist->update($name, $domain[$name]);
+    }
+    return $response->withRedirect($this->router->pathFor('home'),302);
 });
