@@ -43,7 +43,8 @@ $app->get('/export', function ($request, $response, $args) {
      * 0: phishing
      * 1: malware
      * 2: scam
-     * 3: other
+     * 3: autolike
+     * 4: other
      */
     //print_r($wordlists);die;
     foreach ($wordlists as $key => $wordlist) {

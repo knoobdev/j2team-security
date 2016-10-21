@@ -18,7 +18,7 @@ class Wordlist extends Model {
             $data[] = [
                 'ID' => $row['ID'],
                 'NAME' => $row['name'],
-                'VALUE' => unserialize($row['value'])
+                'VALUE' => !empty($row['value']) ? unserialize($row['value']) : []
             ];
         }
         return $data;

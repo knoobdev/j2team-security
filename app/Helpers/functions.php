@@ -54,7 +54,8 @@ if (!function_exists('get_type_name')) {
             case 'phishing': return 0;
             case 'malware': return 1;
             case 'scam': return 2;
-            case 'other': return 3;
+            case 'autolike': return 3;
+            case 'other': return 4;
         }
     }
 }
