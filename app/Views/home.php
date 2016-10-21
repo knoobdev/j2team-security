@@ -66,6 +66,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-secondary">Updated</button>
+                <a href="/j2team-security-app/export?download=true" target="_blank" class="btn btn-secondary">Export to JSON</a>
             </div>
         </form>
         <?php endif;?>

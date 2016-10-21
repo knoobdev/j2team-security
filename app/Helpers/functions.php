@@ -33,3 +33,28 @@ if (!function_exists('redirect')) {
         return $response->withRedirect($app->getContainer()->get('router')->pathFor($name));
     }
 }
+
+if (!function_exists('get_value_to_array')) {
+    function get_value_to_array(array $args = [], $type) {
+        $data = [];
+        foreach($args as $key => $domain) {
+            array_push($data,[
+                'url' => str_replace("\r","",$domain),
+                'type' => $type
+            ]);
+            unset($args[$key]);
+        }
+        return $data;
+    }
+}
+
+if (!function_exists('get_type_name')) {
+    function get_type_value($name) {
+        switch ($name) {
+            case 'phishing': return 0;
+            case 'malware': return 1;
+            case 'scam': return 2;
+            case 'other': return 3;
+        }
+    }
+}
